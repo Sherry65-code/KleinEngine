@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28.0)
+cmake_minimum_required(VERSION 3.20.0)
 
 set(PROJECT_NAME "ProjectGraphics")
 
@@ -11,7 +11,11 @@ link_directories(${CMAKE_SOURCE_DIR}/dlls)
 set(BUILD_SHARED_LIBS OFF)
 set(CMAKE_BINARY_DIR ${CMAKE_BINARY_DIR}/bin)
 
-link_libraries(glfw3dll opengl32)
+if (MSVC)
+    link_libraries(glfw3dll opengl32)
+else()
+    link_libraries(glfw GL)
+endif()
 
 add_executable(
     ${PROJECT_NAME}
