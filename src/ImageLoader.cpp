@@ -2,6 +2,8 @@
 
 Texture::Texture(std::string FilePath) {
 
+	stbi_set_flip_vertically_on_load(true);
+
 	glGenTextures(1, &tex);
 
 	glBindTexture(GL_TEXTURE_2D, tex);
