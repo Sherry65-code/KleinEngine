@@ -10,9 +10,16 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
+#ifdef WIN32
+#include <Windows.h>
+#endif
+
+
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
+#define WINDOW_NAME "ProjectGraphics - Demo"
 #define IS_VSYNC_ON false
+#define IS_DEBUG_ENABLED true
 
 // RETURN CODES
 //
@@ -23,6 +30,8 @@
 // DECLARATIONS
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
+void calculateFPS(GLFWwindow* window);
+void raiseError(std::string ErrorMessage);
 
 
 // IMPLEMENTATION
@@ -35,28 +44,67 @@ void processInput(GLFWwindow* window) {
 		glfwSetWindowShouldClose(window, true);
 }
 
+#if IS_DEBUG_ENABLED
+void calculateFPS(GLFWwindow* window) {
+	static double previousTime = glfwGetTime();
+	static int frameCount = 0;
+
+	double currentTime = glfwGetTime();
+	double deltaTime = currentTime - previousTime;
+	frameCount++;
+
+	if (deltaTime >= 1.0) {
+		double fps = static_cast<double>(frameCount) / deltaTime;
+		
+		char windowTitle[512];
+
+		sprintf(windowTitle, "%s - Demo - DEBUG - FPS : %.2f", WINDOW_NAME, fps);
+
+		glfwSetWindowTitle(window, windowTitle);
+
+	}
+}
+#else
+void calculateFPS(GLFWwindow* window) {
+
+}
+#endif
+
+#ifdef WIN32
+void raiseError(std::string ErrorMessage) {
+	MessageBox(nullptr, ErrorMessage.c_str(), "Error", MB_OK | MB_ICONERROR);
+}
+#else
+void raiseError(std::string ErrorMessage) {
+	std::cerr << "ERROR: " << ErrorMessage << std::endl;
+}
+#endif
+
 int main() {
+
+	// Initialization
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World!", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, nullptr, nullptr);
 
 	if (window == nullptr) {
-		std::cout << "ERROR: Failed to create GLFW Window!" << std::endl;
+		raiseError("Failed to initialize GLFW!");
 		glfwTerminate();
 		return -1;
 	}
 
 	glfwMakeContextCurrent(window);
 
-	if (IS_VSYNC_ON)
-		glfwSwapInterval(1);
-
+	#if IS_VSYNC_ON
+	glfwSwapInterval(1);
+	#else
+	#endif
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		std::cout << "ERROR: Failed to Initialize GLAD!" << std::endl;
+		raiseError("Failed to Load OpenGL!");
 		return -2;
 	}
 
@@ -130,11 +178,12 @@ int main() {
 	Texture container2("assets/textures/grafitti.png");
 
 
-
 	while (!glfwWindowShouldClose(window)) {
 		
 		
 		processInput(window);
+
+		calculateFPS(window);
 
 		glEnable(GL_DEPTH_TEST);
 
