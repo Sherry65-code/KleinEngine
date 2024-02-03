@@ -18,6 +18,8 @@ add_executable(
     ${CMAKE_SOURCE_DIR}/src/main.cpp
     ${CMAKE_SOURCE_DIR}/src/Shader.cpp
     ${CMAKE_SOURCE_DIR}/src/Shader.hpp
+    ${CMAKE_SOURCE_DIR}/src/ImageLoader.cpp
+    ${CMAKE_SOURCE_DIR}/src/ImageLoader.hpp
     ${CMAKE_SOURCE_DIR}/assets/shaders/shader.v.glsl
     ${CMAKE_SOURCE_DIR}/assets/shaders/shader.f.glsl
     ${CMAKE_SOURCE_DIR}/src/ThirdParty/glad.c
