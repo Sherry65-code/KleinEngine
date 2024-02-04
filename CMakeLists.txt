@@ -11,7 +11,7 @@ link_directories(${CMAKE_SOURCE_DIR}/dlls)
 set(BUILD_SHARED_LIBS OFF)
 set(CMAKE_BINARY_DIR ${CMAKE_BINARY_DIR}/bin)
 
-if (MSVC)
+if (WIN32)
     link_libraries(glfw3dll opengl32)
 else()
     link_libraries(glfw GL)
@@ -36,7 +36,7 @@ set_target_properties(
     VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
-if (MSVC)
+if (WIN32)
     file(COPY ${CMAKE_SOURCE_DIR}/dlls/glfw3.dll DESTINATION ${CMAKE_BINARY_DIR})
 endif()
 

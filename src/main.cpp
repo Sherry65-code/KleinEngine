@@ -18,7 +18,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 #define WINDOW_NAME "ProjectGraphics - Demo"
-#define IS_VSYNC_ON false
+#define IS_VSYNC_ON true
 #define IS_DEBUG_ENABLED true
 
 // RETURN CODES
