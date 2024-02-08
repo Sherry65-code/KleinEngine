@@ -24,6 +24,12 @@ add_executable(
     ${CMAKE_SOURCE_DIR}/src/Shader.hpp
     ${CMAKE_SOURCE_DIR}/src/ImageLoader.cpp
     ${CMAKE_SOURCE_DIR}/src/ImageLoader.hpp
+    ${CMAKE_SOURCE_DIR}/src/Window.cpp
+    ${CMAKE_SOURCE_DIR}/src/Window.hpp
+    ${CMAKE_SOURCE_DIR}/src/ErrorHandler.cpp
+    ${CMAKE_SOURCE_DIR}/src/ErrorHandler.hpp
+    ${CMAKE_SOURCE_DIR}/src/__macros__only_hpp.hpp
+    ${CMAKE_SOURCE_DIR}/src/GL_TYPES.hpp
     ${CMAKE_SOURCE_DIR}/assets/shaders/shader.v.glsl
     ${CMAKE_SOURCE_DIR}/assets/shaders/shader.f.glsl
     ${CMAKE_SOURCE_DIR}/src/ThirdParty/glad.c
