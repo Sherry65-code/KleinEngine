@@ -96,19 +96,13 @@ int main() {
 
 	Texture container1("assets/textures/container.jpg");
 
-	float x = 0;
-
 	while (!window.shouldClose()) {
 		
-		if (x > 1) x = 0;
-
-		window.calculateFPS();
-
 		window.processInput();
 
 		glEnable(GL_DEPTH_TEST);
 
-		glClearColor(1.0f, 0.0f, 0.5f, 1.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
 	
 		shader1.use();
@@ -126,8 +120,6 @@ int main() {
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
 		// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
 		shader1.setMat4("projection", projection);
-		shader1.setFloat("color_r", x);
-		x += 0.01;
 		// Bind textures
 		glBindTexture(GL_TEXTURE_2D, container1.tex);
 
