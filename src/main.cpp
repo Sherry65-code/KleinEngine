@@ -147,4 +147,8 @@ void processInput(Window& window) {
         cameraPos[0] += cameraSpeed;
     if (glfwGetKey(window.m_Window, GLFW_KEY_D) == GLFW_PRESS)
         cameraPos[0] -= cameraSpeed;
+    if (glfwGetKey(window.m_Window, GLFW_KEY_Q) == GLFW_PRESS)
+        cameraPos[1] += cameraSpeed;
+    if (glfwGetKey(window.m_Window, GLFW_KEY_E) == GLFW_PRESS)
+        cameraPos[1] -= cameraSpeed;
 }
