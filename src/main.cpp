@@ -75,7 +75,7 @@ int main() {
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	Shader shader1("assets/shaders/shader.v.glsl", "assets/shaders/shader.f.glsl");
+	Shader shader1("assets/shaders/shader.vert", "assets/shaders/shader.frag");
 
 	GL_TYPES::VO v1;
 
