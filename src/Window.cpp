@@ -11,9 +11,8 @@ Window::~Window() {
 }
 
 bool Window::init() {
-
     if (!glfwInit()) {
-        ErrorHandler::raiseError("Window Handler could not be initialized!");
+        throw std::runtime_error("Failed to initialize GLFW");
         return false;
     }
 
@@ -23,23 +22,23 @@ bool Window::init() {
 
     m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
     if (!m_Window) {
-        ErrorHandler::raiseError("Window could not be launched!");
         glfwTerminate();
+        throw std::runtime_error("Failed to create window");
         return false;
     }
 
     glfwMakeContextCurrent(m_Window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        ErrorHandler::raiseError("Could not load Opengl into memory!");
+        throw std::runtime_error("Failed to load OpenGL");
         return false;
     }
 
-    glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(m_Window, framebufferSizeCallback);
 
-    #if IS_VSYNC_ON
+#if IS_VSYNC_ON
     glfwSwapInterval(1);
-    #endif
+#endif
     return true;
 }
 
@@ -60,12 +59,11 @@ void Window::pollEvents() {
     glfwPollEvents();
 }
 
-void Window::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+void Window::framebufferSizeCallback(pWindow window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-
-#if IS_DEBUG_ENABLED
+#ifndef NDEBUG
 void Window::calculateFPS() {
     auto currentTime = std::chrono::high_resolution_clock::now();
     double deltaTime = std::chrono::duration<double>(currentTime - m_LastTime).count();
@@ -76,13 +74,12 @@ void Window::calculateFPS() {
         m_FrameCount = 0;
         m_LastTime = currentTime;
 
-        fprintf(stdout, "FPS: %.2f                     \r", m_LastFPS);
+        fprintf(stdout, "FPS: %.2f\n", m_LastFPS);
         fflush(stdout);
-        
     }
 }
 #else
 void Window::calculateFPS() {
-
+    // Not implemented in release mode
 }
 #endif

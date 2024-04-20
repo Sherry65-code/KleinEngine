@@ -1,20 +1,21 @@
-#ifndef WINDOW_HPP
-#define WINDOW_HPP
+#pragma once
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <chrono>
-#include <stdio.h>
+#include <stdexcept>
 #include "__macros__only_hpp.hpp"
 
 class Window {
 public:
+    // Typedef for window pointer
+    typedef GLFWwindow* pWindow;
+
     Window(int width, int height, const char* title);
     ~Window();
 
-    typedef GLFWwindow* WINDOW;
-    WINDOW m_Window;
+    pWindow m_Window;
 
     bool init();
     void processInput();
@@ -22,7 +23,6 @@ public:
     void swapBuffers();
     void pollEvents();
     void calculateFPS();
-    
 
 private:
     int m_Width;
@@ -30,10 +30,7 @@ private:
     const char* m_Title;
     int m_FrameCount;
     double m_LastFPS;
-    
-    static void framebuffer_size_callback(WINDOW window, int width, int height);
-    std::chrono::time_point<std::chrono::high_resolution_clock> m_LastTime;
-    
-};
 
-#endif /* WINDOW_HPP */
+    static void framebufferSizeCallback(pWindow window, int width, int height);
+    std::chrono::time_point<std::chrono::high_resolution_clock> m_LastTime;
+};
